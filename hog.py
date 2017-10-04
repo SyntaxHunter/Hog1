@@ -24,7 +24,9 @@ def roll_dice(num_rolls, dice=six_sided):
     "*** YOUR CODE HERE ***"
     
     for i in range(num_rolls):
-        print(dice())
+        if dice() == 1:
+            return 1
+     
         
 
 

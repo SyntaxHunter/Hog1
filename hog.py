@@ -24,19 +24,12 @@ def roll_dice(num_rolls, dice=six_sided):
    
     total = 0;
     for i in range(num_rolls):
-<<<<<<< HEAD
         roll = dice()
         if roll == 1:
             return 1;
         total += roll
     return total
-=======
-        if dice() == 1:
-            return 1
-     
->>>>>>> 8d6fa5ab79b005b115f7747cb77c81bb79f1fb6e
         
-
 
 def take_turn(num_rolls, opponent_score, dice=six_sided):
     """Simulate a turn rolling NUM_ROLLS dice, which may be 0 (Free bacon).

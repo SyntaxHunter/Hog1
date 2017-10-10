@@ -152,7 +152,12 @@ def make_averaged(fn, num_samples=1000):
     - In the other, the player rolls a 5 and 6, scoring 11.
     Thus, the average value is 6.0.
     """
-    "*** YOUR CODE HERE ***"
+    def returnFunction(*args):
+        total = 0
+        for i in range(num_samples):
+            total += fn(*args)
+        return total / num_samples
+    return returnFunction
 
 def max_scoring_num_rolls(dice=six_sided):
     """Return the number of dice (1 to 10) that gives the highest average turn
@@ -174,6 +179,24 @@ def max_scoring_num_rolls(dice=six_sided):
     10
     """
     "*** YOUR CODE HERE ***"
+    max = 0
+    highestScore = 0
+    for i in range(1, 11):
+        average = make_averaged(roll_dice, i)
+        
+        value = average(i, dice)
+        if value > highestScore:
+            higestScore = value
+            max = i
+            
+        print (i , "dice scores", value, "on average")
+    
+    return max
+
+
+        
+        
+        
 
 def winner(strategy0, strategy1):
     """Return 0 if strategy0 wins against strategy1, and 1 otherwise."""
@@ -225,7 +248,10 @@ def bacon_strategy(score, opponent_score):
     0
     """
     "*** YOUR CODE HERE ***"
-    return 5 # Replace this statement
+    
+    if 1 + max(opponent_score // 10, opponent_score % 10) >= BACON_MARGIN:
+        return 0;
+    return BASELINE_NUM_ROLLS # Replace this statement
 
 def swap_strategy(score, opponent_score):
     """This strategy rolls 0 dice when it would result in a beneficial swap and
@@ -243,7 +269,12 @@ def swap_strategy(score, opponent_score):
     5
     """
     "*** YOUR CODE HERE ***"
-    return 5 # Replace this statement
+    if 1 + max(opponent_score // 10, opponent_score % 10) + score == 2 * opponent_score:
+        return BASELINE_NUM_ROLLS
+    elif  2 * (1 + max(opponent_score // 10, opponent_score % 10) + score) == opponent_score:
+        return 0
+    else:
+        return bacon_strategy(score, opponent_score)
 
 def final_strategy(score, opponent_score):
     """Write a brief description of your final strategy.

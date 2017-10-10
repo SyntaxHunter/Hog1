@@ -35,7 +35,7 @@ def problem1(grades):
                    ((3, make_test_dice(4, 6, 1)),            1),
                    ((3, make_test_dice(1, 2, 3)),            1),
                    ((3, counted_dice),                       1),
-                   ((1, counted_dice),                       4)]
+                   ((1, counted_dice),                       2)]
     test_suite2 = [((5, make_test_dice(4, 2, 3, 3, 4, 1)),  16),
                    ((2, make_test_dice(1)),                  1)]
 

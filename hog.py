@@ -42,10 +42,11 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert num_rolls >= 0, 'Cannot roll a negative number of dice.'
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
     assert opponent_score < 100, 'The game should be over.'
+    
     if num_rolls == 0:
         return 1 + max(opponent_score // 10, opponent_score % 10)
     else:
-        return roll_dice(num_rolls)
+        return roll_dice(num_rolls, dice)
 
 # Playing a game
 
@@ -90,12 +91,11 @@ def play(strategy0, strategy1, goal=GOAL_SCORE):
     score, opponent_score = 0, 0
     "*** YOUR CODE HERE ***"
     
-    while score != 100 and opponent_score != 100:
+    while score < 100 and opponent_score < 100:
         
         if who == 0:
             score += take_turn(strategy0(score, opponent_score), opponent_score, select_dice(score, opponent_score))
 
-            
         else:
             opponent_score += take_turn(strategy1(opponent_score, score), score, select_dice(opponent_score, score))
     
@@ -189,7 +189,7 @@ def max_scoring_num_rolls(dice=six_sided):
             higestScore = value
             max = i
             
-        print (i , "dice scores", value, "on average")
+        #print (i , "dice scores", value, "on average")
     
     return max
 
@@ -282,6 +282,9 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     "*** YOUR CODE HERE ***"
+    
+    return (swap_strategy(score, opponent_score))
+    
     return 5 # Replace this statement
 
 
@@ -362,3 +365,16 @@ def run(*args):
             exit(0)
     elif args.run_experiments:
         run_experiments()
+
+playerWins = 0
+computerWins = 0
+for i in range(100000):
+    score, opscore = play(final_strategy, always_roll(6))
+    
+    if score > opscore:
+        playerWins+= 1
+    else:
+        computerWins += 1
+print ("Player: ", playerWins)
+print ("Computer: ", computerWins)
+print (playerWins / 100000)

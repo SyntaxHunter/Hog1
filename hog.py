@@ -283,7 +283,25 @@ def final_strategy(score, opponent_score):
     """
     "*** YOUR CODE HERE ***"
     
-    return (swap_strategy(score, opponent_score))
+    #return 6
+    sScore = swap_strategy(score, opponent_score)
+    
+    
+    if sScore == 0 or (score + 1 + max(opponent_score // 10, opponent_score % 10) + opponent_score) % 7 == 0 or (score + 1 + max(opponent_score // 10, opponent_score % 10))* 2 == opponent_score:
+        return 0;
+    else:
+        swapScore = make_averaged(roll_dice)
+        swapStrategy = swapScore(sScore, select_dice(score,opponent_score))
+    
+        zeroStrategy = 1 + max(opponent_score // 10, opponent_score % 10)
+
+        if swapStrategy > zeroStrategy:
+            return sScore
+        else:
+            return 0
+    
+    
+    #return (swap_strategy(score, opponent_score))
     
     return 5 # Replace this statement
 
@@ -368,7 +386,8 @@ def run(*args):
 
 playerWins = 0
 computerWins = 0
-for i in range(100000):
+for i in range(500):
+    #print(i)
     score, opscore = play(final_strategy, always_roll(6))
     
     if score > opscore:
@@ -377,4 +396,4 @@ for i in range(100000):
         computerWins += 1
 print ("Player: ", playerWins)
 print ("Computer: ", computerWins)
-print (playerWins / 100000)
+print (playerWins / 500)
